@@ -368,7 +368,7 @@ class AppSyncOfflineMutationInterceptor implements ApolloInterceptor {
         queueHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.v(TAG, "Thread:[" + Thread.currentThread().getId() +"]: processing Mutations");
+                Log.v(TAG, "Thread:[" + Thread.currentThread().getId() +"]: processing Mutations TEST JAY");
                 Message message = new Message();
                 message.obj = new MutationInterceptorMessage();
                 message.what = MessageNumberUtil.SUCCESSFUL_EXEC;
