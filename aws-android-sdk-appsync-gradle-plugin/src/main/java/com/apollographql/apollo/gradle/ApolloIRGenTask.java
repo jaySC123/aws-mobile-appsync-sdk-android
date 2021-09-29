@@ -58,7 +58,7 @@ public class ApolloIRGenTask extends NodeTask {
     setScript(new File(getProject().getBuildDir(), APOLLO_CODEGEN));
 
     outputFolder = new File(getProject().getBuildDir() + File.separator +
-        Joiner.on(File.separator).join(GraphQLCompiler.Companion.getOUTPUT_DIRECTORY()) + "/generatedIR/" + variant);
+            Joiner.on(File.separator).join(GraphQLCompiler.Companion.getOUTPUT_DIRECTORY()) + "/generatedIR/" + variant);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class ApolloIRGenTask extends NodeTask {
 
       if (!schemaFile.exists()) {
         throw new GradleException("Provided schema file path doesn't exists: " + extension.getSchemaFilePath() +
-            ". Please ensure a valid schema file exists");
+                ". Please ensure a valid schema file exists");
       }
     }
 
@@ -82,10 +82,10 @@ public class ApolloIRGenTask extends NodeTask {
         throw new GradleException("Missing explicit targetPackageName option. Please ensure a valid package name is provided");
       } else {
         targetPackageFolder = new File(outputFolder.getAbsolutePath()
-            + File.separator + "src"
-            + File.separator + "main"
-            + File.separator + "graphql"
-            + File.separator + extension.getOutputPackageName().replace(".", File.separator));
+                + File.separator + "src"
+                + File.separator + "main"
+                + File.separator + "graphql"
+                + File.separator + extension.getOutputPackageName().replace(".", File.separator));
       }
     }
 
@@ -113,12 +113,12 @@ public class ApolloIRGenTask extends NodeTask {
       apolloArgs.add("generate");
       apolloArgs.addAll(codegenArg.queryFilePaths);
       apolloArgs.addAll(Arrays.asList(
-          "--add-typename",
-          "--schema", codegenArg.schemaFile.getAbsolutePath(),
-          "--output", codegenArg.irOutputFolder.getAbsolutePath() + File.separator + Utils.capitalize(variant) + "API.json",
-          "--operation-ids-path", codegenArg.irOutputFolder.getAbsolutePath() + File.separator + Utils.capitalize(variant) + "OperationIdMap.json",
-          "--merge-in-fields-from-fragment-spreads", "false",
-          "--target", "json"
+              "--add-typename",
+              "--schema", codegenArg.schemaFile.getAbsolutePath(),
+              "--output", codegenArg.irOutputFolder.getAbsolutePath() + File.separator + Utils.capitalize(variant) + "API.json",
+              "--operation-ids-path", codegenArg.irOutputFolder.getAbsolutePath() + File.separator + Utils.capitalize(variant) + "OperationIdMap.json",
+              "--merge-in-fields-from-fragment-spreads", "false",
+              "--target", "json"
       ));
       setArgs(apolloArgs);
       super.exec();
@@ -143,12 +143,12 @@ public class ApolloIRGenTask extends NodeTask {
 
     if (schemaFiles.isEmpty()) {
       throw new GradleException("Couldn't find schema files for the variant " + Utils.capitalize(variant) + ". Please" +
-          " ensure a valid schema.json exists under the varian't source sets");
+              " ensure a valid schema.json exists under the varian't source sets");
     }
 
     if (illegalSchemasFound(schemaFiles)) {
       throw new GradleException("Found an ancestor directory to a schema file that contains another schema file." +
-          " Please ensure no schema files exist on the path to another one");
+              " Please ensure no schema files exist on the path to another one");
     }
 
     ImmutableMap.Builder<String, ApolloCodegenArgs> schemaQueryMap = ImmutableMap.builder();
@@ -252,5 +252,29 @@ public class ApolloIRGenTask extends NodeTask {
 
   public File getOutputFolder() {
     return outputFolder;
+  }
+
+  public String getVariant() {
+    return variant;
+  }
+
+  public void setVariant(String variant) {
+    this.variant = variant;
+  }
+
+  public ImmutableList<String> getSourceSets() {
+    return sourceSets;
+  }
+
+  public void setSourceSets(ImmutableList<String> sourceSets) {
+    this.sourceSets = sourceSets;
+  }
+
+  public ApolloExtension getExtension() {
+    return extension;
+  }
+
+  public void setExtension(ApolloExtension extension) {
+    this.extension = extension;
   }
 }
